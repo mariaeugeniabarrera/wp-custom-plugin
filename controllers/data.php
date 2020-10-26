@@ -1,8 +1,8 @@
 <?php
-	$servername = "200.110.135.126";
-	$username = "tradem_user_et";
-	$password = "2EeHrkIA";
-	$dbname = "tradem_et";
+	$servername = "000.000.000.000";
+	$username = "xxxxxxxxx";
+	$password = "xxxxxxxxxxx";
+	$dbname = "xxxxxxxx";
 
 	$conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -20,7 +20,7 @@
 	switch ($_POST['data']) // ||   $_GET['data']
 	{
 		case 'clientes_detailed_data':
-			$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style,habilitado_informe FROM tradem_et.nuke_clientes order by id asc";
+			$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style,habilitado_informe FROM xxxxx.nuke_clientes order by id asc";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
@@ -33,7 +33,7 @@
 			break;
 		
 		case 'get_banners':
-			$sql = "select cliente, contador_design, contador_espacio, contador_style, fecha_inicio, banner as no_banner FROM tradem_et.wp_stats_banners";
+			$sql = "select cliente, contador_design, contador_espacio, contador_style, fecha_inicio, banner as no_banner FROM xxxxxxx.wp_stats_banners";
 			$result = $conn->query($sql);
 			if ($result->num_rows > 0) {
 				while($row = $result->fetch_assoc()) {
@@ -51,7 +51,7 @@
 				$usuario = $_POST['usuario'];
 				$password = $_POST['password'];
 				$admin = 0;
-				$sql = "SELECT * FROM tradem_et.wp_users WHERE user_login = '$usuario' AND user_pass = '$password'";
+				$sql = "SELECT * FROM xxxxxx.wp_users WHERE user_login = '$usuario' AND user_pass = '$password'";
 				//echo $sql;
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
@@ -79,7 +79,7 @@
 			if($_POST['fecha'] && $_POST['cliente']){
 				$fecha = $_POST['fecha'];
 				$cliente = $_POST['cliente'];
-				$sql = "SELECT fecha, informe FROM tradem_et.informes_enviados where fecha like '%$fecha%' and cliente like '%$cliente%'";
+				$sql = "SELECT fecha, informe FROM xxxxxx.informes_enviados where fecha like '%$fecha%' and cliente like '%$cliente%'";
 				//echo $sql;
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
@@ -97,7 +97,7 @@
 		case 'ver_informes_enviados':
 			if($_POST['fecha']){
 				$fecha = $_POST['fecha'];
-				$sql = "SELECT fecha, informe,cliente FROM tradem_et.informes_enviados where fecha like '%$fecha%'";
+				$sql = "SELECT fecha, informe,cliente FROM xxxxxx.informes_enviados where fecha like '%$fecha%'";
 				//echo $sql;
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
@@ -116,7 +116,7 @@
 			if($_POST['id_cliente'] && $_POST['habilitado']){
 				$id_cliente = $_POST['id_cliente'];
 				$habilitado = $_POST['habilitado'];
-				$sql = "update tradem_et.nuke_clientes set habilitado_informe = $habilitado where id = $id_cliente";
+				$sql = "update xxxxxx.nuke_clientes set habilitado_informe = $habilitado where id = $id_cliente";
 				$result = $conn->query($sql);
 				if ($result != true) {
 					echo $sql . '  ' . $conn->error . " $habilitado ";
@@ -131,7 +131,7 @@
 				$page = $_POST['page'];
 				$page_start = ($page - 1) * 10;
 				$page_end = $page * 10;
-				$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style FROM tradem_et.nuke_clientes WHERE id >= $page_start AND id <= $page_end order by id asc";
+				$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style FROM xxxxxx.nuke_clientes WHERE id >= $page_start AND id <= $page_end order by id asc";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -149,7 +149,7 @@
 				$mes = $_POST['mes'];
 				$anio = $_POST['anio'];
 				$zona = $_POST['zona'];
-				$sql = "SELECT contador FROM tradem_et.wp_stats WHERE mes=$mes AND anio=$anio AND zona = '$zona'";
+				$sql = "SELECT contador FROM xxxxxx.wp_stats WHERE mes=$mes AND anio=$anio AND zona = '$zona'";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -166,7 +166,7 @@
 			if($_POST['mes'] && $_POST['anio']){
 				$mes = $_POST['mes'];
 				$anio = $_POST['anio'];
-				$sql = "SELECT * FROM tradem_et.wp_stats where mes = $mes and anio = $anio";
+				$sql = "SELECT * FROM xxxxxx.wp_stats where mes = $mes and anio = $anio";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -182,7 +182,7 @@
 		case 'notas_sitio':
 			if($_POST['cliente_id']){
 				$cliente_id = $_POST['cliente_id'];
-				$sql = "SELECT post_id,meta_key,meta_value FROM tradem_et.postmeta WHERE meta_key = 'cliente' and meta_value = '$cliente_id' ORDER BY post_id DESC";
+				$sql = "SELECT post_id,meta_key,meta_value FROM xxxxxx.postmeta WHERE meta_key = 'cliente' and meta_value = '$cliente_id' ORDER BY post_id DESC";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -201,7 +201,7 @@
 				$anio = $_POST['anio'];
 				//echo "Nota Sitio All";
 				$datos = '';
-				$sql = "SELECT post_id,meta_key,meta_value,nombre,post_title,post_date,post_status FROM tradem_et.wp_postmeta pm left join tradem_et.nuke_clientes nc on pm.meta_value = nc.id left join tradem_et.wp_posts ps on ps.ID = pm.post_id WHERE pm.meta_key = 'cliente' AND post_date like '%$anio-$mes%'";
+				$sql = "SELECT post_id,meta_key,meta_value,nombre,post_title,post_date,post_status FROM xxxxxx.wp_postmeta pm left join xxxxxx.nuke_clientes nc on pm.meta_value = nc.id left join xxxxxx.wp_posts ps on ps.ID = pm.post_id WHERE pm.meta_key = 'cliente' AND post_date like '%$anio-$mes%'";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -217,7 +217,7 @@
 		case 'cantidad_vistas_notas_del_sitio':
 			if($_POST['anio']){
 				$anio = $_POST['anio'];
-				$sql = "SELECT post_id, meta_value as cantidad_vistas, post_date, post_title, post_status, guid FROM tradem_et.wp_postmeta pm left join tradem_et.wp_posts ps on ps.ID = pm.post_id where meta_key = 'views' and ps.post_date like '$anio-%'";
+				$sql = "SELECT post_id, meta_value as cantidad_vistas, post_date, post_title, post_status, guid FROM xxxxxx.wp_postmeta pm left join xxxxxx.wp_posts ps on ps.ID = pm.post_id where meta_key = 'views' and ps.post_date like '$anio-%'";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -234,7 +234,7 @@
 			if($_POST['cliente_id'] && $_POST['sitio']){
 				$cliente_id = $_POST['cliente_id'];
 				$sitio = $_POST['sitio'];
-				$sql = "SELECT * FROM tradem_et.nuke_clientes_stats WHERE id_cliente='$cliente_id' AND sitio='$sitio' and titulo<>'' ORDER BY id DESC";
+				$sql = "SELECT * FROM xxxxxx.nuke_clientes_stats WHERE id_cliente='$cliente_id' AND sitio='$sitio' and titulo<>'' ORDER BY id DESC";
 				$result = $conn->query($sql);
 				if ($result->num_rows > 0) {
 					while($row = $result->fetch_assoc()) {
@@ -254,7 +254,7 @@
 				$template = $_POST['template_html'];
 				$title_informe = 'RRG - Reporte Resumen Global';
 				/* Procesar todo el informe */
-				$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style FROM tradem_et.nuke_clientes WHERE habilitado_informe = 1"; /* Recorro los clientes habilitados para enviar el informe */
+				$sql = "SELECT id,nombre,url,emails,count_espacio,count_design,count_style FROM xxxxxx.nuke_clientes WHERE habilitado_informe = 1"; /* Recorro los clientes habilitados para enviar el informe */
 				$result0 = $conn->query($sql);
 				//echo $sql . '  ' . $conn->error;
 				if ($result0->num_rows > 0) {
@@ -287,14 +287,14 @@
 							
 								$micropixel = 0;
 								$micropixel_home = 0;
-								$q_micro_home = "SELECT contador FROM tradem_et.wp_stats WHERE mes=$mes AND anio =$anio AND zona = 'home'";
+								$q_micro_home = "SELECT contador FROM xxxxxx.wp_stats WHERE mes=$mes AND anio =$anio AND zona = 'home'";
 								$result = $conn->query($q_micro_home);
 								if ($result->num_rows > 0) {
 									while($row = $result->fetch_assoc()) {
 										$micropixel_home = $row['contador'];
 									}
 								}
-								$q_micro_footer = "SELECT contador FROM tradem_et.wp_stats WHERE mes=$mes AND anio=$anio AND zona = 'footer'";
+								$q_micro_footer = "SELECT contador FROM xxxxxx.wp_stats WHERE mes=$mes AND anio=$anio AND zona = 'footer'";
 								$micropixel_footer = 0;
 								$result = $conn->query($q_micro_home);
 								if ($result->num_rows > 0) {
@@ -313,9 +313,9 @@
 							
 							/* Obtener Notas y Cant. Visitas de Notas por Cliente */
 								
-								// ESPACIO TRADEM
+								//
 								$articulos_espacio = '';
-								$sql = "select *, meta_value as visitas from (select cli.id as cli_id, post_id, post.post_title from tradem_et.nuke_clientes cli right join tradem_et.wp_postmeta postmeta on postmeta.meta_value = cli.id right join tradem_et.wp_posts post on post.ID = postmeta.meta_value where postmeta.meta_key = 'cliente' and cli.id = $cliente) as tabla left join tradem_et.wp_postmeta pm on pm.post_id = tabla.post_id where pm.meta_key = 'views'";
+								$sql = "select *, meta_value as visitas from (select cli.id as cli_id, post_id, post.post_title from xxxxxx.nuke_clientes cli right join xxxxxx.wp_postmeta postmeta on postmeta.meta_value = cli.id right join xxxxxx.wp_posts post on post.ID = postmeta.meta_value where postmeta.meta_key = 'cliente' and cli.id = $cliente) as tabla left join xxxxxx.wp_postmeta pm on pm.post_id = tabla.post_id where pm.meta_key = 'views'";
 								$result1 = $conn->query($sql);
 								$total_visitas_espacio = 0;
 								//echo $sql . '  ' . $conn->error;
@@ -354,7 +354,7 @@
 								';
 								echo $tabla_espacio;
 								
-								// TRADEM DESIGN
+								// 
 								$sql = 'select * from nuke_clientes_stats where id_cliente=$cliente and sitio="design2 and titulo<>""';
 								$result2 = $conn->query($sql);
 								if ($result1->num_rows > 0) {

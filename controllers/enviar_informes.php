@@ -124,7 +124,7 @@ $cuerpo = '
     <tr><td>
     <table width="600" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bgcolor="#FFFFFF">
     <tr>
-    <td height="129" background="http://www.espaciotradem.com/reportes/cabezal.jpg"><table width="600" border="0" cellspacing="0" cellpadding="5">
+    <td height="129" background="http://localhost/reportes/cabezal.jpg"><table width="600" border="0" cellspacing="0" cellpadding="5">
     <tr>
     <td height="80" colspan="2">&nbsp;</td>
     </tr>
@@ -340,12 +340,12 @@ $cuerpo .= '
     <td>
     <table width="580" border="0" align="center" cellpadding="0" cellspacing="0">
       <tr>
-        <td><strong><font color="#6699CC" size="3" face="Verdana, Arial, Helvetica, sans-serif">Acerca TrademMedia.com</font></strong></td>
+        <td><strong><font color="#6699CC" size="3" face="Verdana, Arial, Helvetica, sans-serif">Acerca xxxxx.com</font></strong></td>
       </tr>
       <tr>
         <td><font face="Verdana, Arial, Helvetica, sans-serif "size="2" >
         <p style="color:color:#666; font-size: 11px;">
-        <strong>TrademMedia.com</strong> es el espacio on line orientado a la arquitectura, el diseño, la vanguardia, que posee dentro de su universo tres plataformas temáticas de comunicación (EspacioTradem, TrademDesign & TrademStyle) y redes sociales integradas (Comunidad Tradem).<br/><br/>
+        <strong>xxxxxx.com</strong> es el espacio on line orientado a la arquitectura, el diseño, la vanguardia, que posee dentro de su universo tres plataformas temáticas de comunicación (EspacioTradem, TrademDesign & TrademStyle) y redes sociales integradas (Comunidad Tradem).<br/><br/>
         
 
         
@@ -367,11 +367,11 @@ $cuerpo .= '
     <tr>
     
     <td height="100">
-    <img usemap="#map" src="http://www.espaciotradem.com/reportes/pie-reporte.jpg">
+    <img usemap="#map" src="http://localhost/reportes/pie-reporte.jpg">
     
     <map name="map">
-<area shape="rect" coords="18,22,72,73" alt="TW" href="http://twitter.com/ComunidadTradem" />
-<area shape="rect" coords="82,21,136,74" alt="FAcebook" href="http://www.facebook.com/ComunidadTradem" />
+<area shape="rect" coords="18,22,72,73" alt="TW" href="http://twitter.com/xxxx" />
+<area shape="rect" coords="82,21,136,74" alt="FAcebook" href="http://www.facebook.com/xxxxx" />
     
     </map>
     
@@ -399,7 +399,7 @@ $cuerpo .= '
 	//$wpdb->insert('informes_enviados',array('informe' => $cuerpo, 'cliente' => $emails_destinatarios[0]));
 	
 	$asunto = "IMPORTANTE : RRG - Reporte Resumen Global - ".$cliente->NOMBRE;
-	$headers[] = 'Bcc: reportetradem@gmail.com';
+	$headers[] = 'Bcc: xxxxx@gmail.com';
 	//print_r($emails_destinatarios);
 	//echo $asunto;
 	 if($_POST['email_destino']){
@@ -408,7 +408,7 @@ $cuerpo .= '
 	 }
 
 	
-	//$emails_destinatarios = 'alejandro@grupodeboss.com';
+	//$emails_destinatarios = '';
 	//wp_mail($emails_destinatarios, $asunto, $cuerpo,$headers );
 
 

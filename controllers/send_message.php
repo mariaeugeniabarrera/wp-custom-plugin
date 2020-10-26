@@ -22,18 +22,18 @@
 	$mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 	$mail->isSMTP();                                      // Set mailer to use SMTP
-	$mail->Host = 'mail.gspiedras.com';  			// Specify main and backup SMTP servers
+	$mail->Host = 'mail.xxxxx.com';  			// Specify main and backup SMTP servers
 	$mail->SMTPAuth = true;                               // Enable SMTP authentication
-	$mail->Username = 'info@gspiedras.com.ar';                 // SMTP username
+	$mail->Username = 'info@localhost.com.ar';                 // SMTP username
 	$mail->Password = 'inf369';                           // SMTP password
 	//$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 	$mail->Port = 25;                                    // TCP port to connect to
 
-	$mail->setFrom('info@gspiedras.com.ar', 'GSPiedras Company');
+	$mail->setFrom('info@localhost.com.ar', 'localhost Company');
 	
 	//$mail->addAddress('Eugenia@gmail.com', 'Eugenia');
 	
-	$mail->addAddress('eugenia@grupodeboss.com', 'Eugenia');     // Add a recipient
+	$mail->addAddress('', 'Eugenia');     // Add a recipient
 	//$mail->addAddress('Eugenia@gmail.com', 'Eugenia');               // Name is optional
 	//$mail->addAddress('Eugenia@gmail.com', 'Eugenia');               // Name is optional
 	//$mail->addReplyTo('mail@gmail.com', 'Eugenia');
@@ -47,7 +47,7 @@
 
 	$mail->Subject = "Nuevo Mensaje de $name";
 	$mail->Body    = "<p><b>Full name: </b>$name</p> <p><b>Email: </b>$email</p> <p><b>Inquiry: </b>$inquiry</p>";
-	$mail->AltBody = 'Mensaje enviado desde la web de gspiedras.';
+	$mail->AltBody = 'Mensaje enviado desde la web de localhost.';
 
 	if(!$mail->send()) {
 		echo 'Su mensaje no pude ser enviado. Por favor intente de nuevo.';
