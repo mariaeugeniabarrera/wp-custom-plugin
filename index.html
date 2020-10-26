@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Grupo Deboss Informes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+  <link rel="stylesheet" src='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css'>
+  <script type="text/javascript" src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+  <script type="text/javascript" src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
+  <script src="js/jquery.twbsPagination.js"></script>
+  <link rel="stylesheet" href="css/loader.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
+<style>
+html {
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
+body {
+	height:100%;
+	background-image: url(images/15.jpg);
+	background-size: 100% 100%;
+	font-family: 'Ubuntu', sans-serif;
+}
+input {
+	margin-top:10px;
+	width:70%;
+}
+label {
+	margin-top:10px;
+}
+.label-danger {
+	/*margin-top:40px;*/
+	font-weight: 100;
+    padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    font-size: 14px;
+}
+.total {
+	color: #fff;
+    background-color: #563d7c;
+	padding:20px;
+	font-size:16px;
+}
+.badge {
+	font-size:16px;
+	background-color: #fff;
+	color: #563d7c;
+	margin-left:20px;
+}
+.panel .panel-default .panel-heading {
+	background-color: #563d7c;
+}
+#tiempo {
+	color:#fff;
+	/*background: #ff0084;
+	background: -webkit-linear-gradient(to left, #ff0084 , #33001b); 
+	background: linear-gradient(to left, #ff0084 , #33001b);
+	background: #6441A5; 
+	background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); 
+	background: linear-gradient(to left, #6441A5 , #2a0845);*/
+	background: #43cea2; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #43cea2 , #185a9d); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #43cea2 , #185a9d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	border-color:#43cea2; /*rgba(255,255,255,0.7);*/
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+}
+.tiempo-heading {
+	background-color:#fff;
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #185a9d;
+	font-size:16px;
+	border-radius: 4px 4px 0px 0px;
+}
+.contador-heading {
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #fff;
+	font-size:16px;
+	border-radius: 4px 4px 0px 0px;
+	background: #6441A5; 
+	background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); 
+	background: linear-gradient(to left, #6441A5 , #2a0845);
+}
+#contador {
+	border-color: #2a0845;
+}
+#notas {
+	border-color: #2a0845;
+}
+#overlay {
+	background-color:rgba(0,0,0,0.8);
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:555555;
+}
+#login {
+	position:absolute;
+	top:20%;
+	left:30%;
+	width:420px;
+	height:400px;
+	z-index:555556;
+	background-color:#fff;
+	padding:40px;
+}
+.notas-heading {
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #fff;
+	font-size:16px;
+	border-radius: 4px 4px 0px 0px;
+	background: #6441A5; 
+	background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); 
+	background: linear-gradient(to left, #6441A5 , #2a0845);
+}
+@media only screen and (max-width: 767px) {
+	.panel {
+		width: 95%;
+		margin-top:20px;
+	}
+}
+@media screen and (min-width: 767px) {
+	.panel {
+		width: 90%;
+		margin-top:20px;
+	}
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+
+		/* GLOBAL VARIABLES */
+		var clientes_footer = [94,176,82,120,267,294,198,219,283,79,291,300,89,298,290];
+		var clientes_home = [56,301,189,32,146,67,83,5,13,151,187,65,64,63,223,138,178,295,236,71];
+		var clientes_ambos = [205];
+		var statistics_body = document.getElementById('statistics_body');
+		var post_by_client = document.getElementById('post_by_client');
+		var d = new Date();
+		var mes = d.getMonth();
+		var anio = d.getFullYear();
+		var total = 0;
+		var month = new Array();
+		month[0] = "Enero";
+		month[1] = "Febrero";
+		month[2] = "Marzo";
+		month[3] = "Abril";
+		month[4] = "Mayo";
+		month[5] = "Junio";
+		month[6] = "Julio";
+		month[7] = "Agosto";
+		month[8] = "Septiembre";
+		month[9] = "Octubre";
+		month[10] = "Noviembre";
+		month[11] = "Diciembre";
+		
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i = 0; i <ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length,c.length);
+				}
+			}
+			return "";
+		}
+		
+		var user = getCookie('session');
+		console.log("Usuario: " + user);
+
+		if(!user){
+			$('#overlay').show();
+			//window.location = 'login.html';
+		}else{
+			$('#overlay').hide();
+		}
+		
+		getNewVal=function(valor){
+			console.log(valor);
+			if(valor<=12){
+				mes = valor;
+			}else{
+				anio = valor;
+			}
+			getClientesDataStatistics();
+			getClientesPosts();
+		}
+		function FillMonthYear(){
+			console.log("FillMonthYear");
+			var statistics_panel = document.getElementById('contenedor_dropdown');
+			var mi_html = '';
+			mi_html+='<div class="form-group" style="width:150px;display:inline-block;margin-right:20px;">'+
+			'<label for="sel1">Mes</label>'+
+			'<select id="mes" onchange="getNewVal(this.value);" class="form-control" id="sel1">';
+			
+			for(var v=0;v<=month.length;v++){
+				if(v==mes){
+					mi_html+='<option value="'+(v+1)+'" selected>'+month[d.getMonth()]+'</option>';
+				}else{
+					mi_html+='<option value="'+(v+1)+'">'+month[v]+'</option>';
+				}
+			}
+			mi_html+='</select></div>';
+			
+			mi_html+='<div class="form-group" style="width:150px;display:inline-block;">'+
+			'<label for="sel1">Año</label>'+
+			'<select id="anio" onchange="getNewVal(this.value);" class="form-control" id="sel1">';
+			
+			for(var b=(anio-4);b<(anio+3);b++){
+				if(b==anio){
+					mi_html+='<option value="'+b+'" selected>'+b+'</option>';
+				}else{
+					mi_html+='<option value="'+b+'">'+b+'</option>';
+				}
+			}
+			mi_html+='</select></div>';
+			
+			statistics_panel.innerHTML+=mi_html;
+		}
+		FillMonthYear();
+		
+		save_informe_habilitado = function(id_cliente){
+			var checkbox = document.getElementById('habilitado_'+id_cliente);
+			var habilitado = 0;
+			if(checkbox.checked == true){
+				habilitado = 1;
+			}
+			console.log("habilitado "+habilitado);
+			$.post( "controllers/data.php",
+			{
+				'data':'update_habilitado_informe',
+				'id_cliente':id_cliente,
+				'habilitado':habilitado
+			}, function( data ) {
+				console.log(JSON.stringify(data));
+			});	
+		}
+		
+		loguear = function() {
+			var usuario = $('#usuario').val();
+			var password = $('#psw').val();
+			
+			$.post( "controllers/data.php",
+			{
+				'data':'login',
+				'usuario':usuario,
+				'password':password
+			}, function( data ) {
+				if(data == true){
+					$('#overlay').hide(1000);
+				}else{
+					alert("Error, your username or password is incorrect.");
+				}
+			});	
+			
+		}
+		
+		logout = function() {
+			$.post( "controllers/data.php",
+			{
+				'data':'logout'
+			}, function( data ) {
+				window.location = 'index.html';
+			});	
+		}
+		
+		function getClientesPosts(){
+			console.log("mes " + mes);
+			console.log("anio " + anio);
+			var mess = 0;
+			post_by_client.innerHTML ='';
+			if(mes<10){mess='0'+mes;}else{mess=mes;}
+			$.post( "controllers/data.php",
+			{
+				'data':'notas_sitio_all',
+				'mes':mess,
+				'anio':anio
+			}, function( data ) {
+				//console.log(JSON.stringify(data));
+				data = JSON.parse(data);
+				for(var i=0;i<data.length;i++)
+				{
+					post_by_client.innerHTML+='<tr>' +
+					'<td>' + data[i].post_id + '</td>'+
+					'<td>' + data[i].meta_value + '</td>'+
+					'<td>' + data[i].nombre + '</td>'+
+					'<td>' + data[i].post_title + '</td>'+
+					'<td>' + data[i].post_date + '</td>'+
+					'<td>' + data[i].post_status + '</td>'+
+					'</tr>';
+				}
+				$('#loader').hide();
+				$('#users3').DataTable();
+			});	
+		}
+		getClientesPosts();
+		
+		function getClientesDataStatistics(){
+			console.log("mes " + mes);
+			console.log("anio " + anio);
+			$.post( "controllers/data.php",
+			{
+				'data':'contador_banners_sin_zona',
+				'mes':mes,
+				'anio':anio
+			}, function( data ) {
+				//console.log(JSON.stringify(data));
+				data = JSON.parse(data);
+				statistics_body.innerHTML = '';
+				for(var ip=0;ip<data.length;ip++)
+				{
+					total += parseInt(data[ip].contador);
+					statistics_body.innerHTML+='<tr>' +
+					'<td>' + data[ip].contador + '</td>'+
+					'<td>' + data[ip].zona + '</td>'+
+					'</tr>';
+				}
+				document.getElementById('total_badge').innerHTML = total;
+				$('#users2').DataTable(); //{processing: true}
+			});	
+		}
+		getClientesDataStatistics();
+});
+</script>
+
+</head>
+<body>
+<div id="overlay">
+	<!-- Login -->
+	<div id="login">
+		<img src="images/firmagd.jpg" style="margin-bottom:20px;" />
+		<input id="usuario" type="text" class="form-control" placeholder="Usuario" />
+		<input id="psw" type="password" class="form-control" placeholder="Password" style="margin-bottom:20px;" />
+		<center><button type="button" class="btn btn-default" onclick="loguear()">Ingresar</button></center>
+	</div>
+	<!-- ./ Login -->
+</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html"><img alt="Brand" src="images/logo_gd_29x30.png" height="100%"></a>
+    </div>
+    <ul class="nav navbar-nav">
+	  <li class="active"><a href="index.html">Ver Datos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+	  <li><a href="notas.html">Notas</a></li>
+      <li><a href="informes_enviados.html">Informes</a></li>
+      <li><a href="banner.html">Banners</a></li>
+	  <form class="navbar-form navbar-right" role="">
+		<button type="button" class="btn btn-default" onclick="logout()">Logout</button>
+	  </form>
+    </ul>
+  </div>
+</nav>
+
+<div align="center">
+<div id="tiempo" class="panel panel-default" align="center">
+ <div class="tiempo-heading">Margen de Tiempo de los Datos</div>
+  <div class="panel-body" id="estadisticas_content">
+		
+	  <div id="contenedor_dropdown">
+	  </div>
+
+</div>
+</div>
+</div>
+</div><!-- ./ Center -->
+
+<div align="center">
+<div id="contador" class="panel panel-default" align="center">
+ <div class="contador-heading">Contador Micropixel</div>
+  <div class="panel-body" id="estadisticas_content">
+		
+	  <div id="contenedor_dropdown">
+	  </div>
+	  <table id="users2" class="table table-striped">
+		<thead>
+		  <tr>
+			<th>Contador Micropixel</th>
+			<th>Zona</th>
+		  </tr>
+		</thead>
+		<tbody id="statistics_body">
+		</tbody>
+	  </table>
+	  <div align="left" style="width:200px;">
+	  <div class="total" role="alert">Total <span id="total_badge" class="badge">4</span></div>
+	  </div>
+	  <!--<div class="jumbotron" id="total"><button class="btn btn-primary" type="button"></button></div>-->
+  <!--</div>-->
+  <!-- ./ Contador Estadistico -->
+
+</div>
+</div>
+</div>
+</div><!-- ./ Center -->
+
+<div align="center">
+<div id="notas" class="panel panel-default" align="center">
+ <div class="notas-heading">Notas Por Cliente Por Mes</div>
+  <div class="panel-body" id="estadisticas_content">
+		
+  <!-- Posts by Client -->
+  <div class="table-responsive">
+	  <table id="users3" class="table table-striped">
+		<thead>
+		  <tr>
+			<th>Post ID</th>
+			<th>Cliente ID</th>
+			<th>Nombre Cliente</th>
+			<th>Titulo Nota</th>
+			<th>Fecha Nota</th>
+			<th>Estado</th>
+		  </tr>
+		</thead>
+		<tbody id="post_by_client">
+		</tbody>
+	  </table>
+  </div>
+  <!-- ./ Posts by Client -->
+  <!-- Ajax Loader -->
+  <div id="loader">
+  <div class="cssload-thecube">
+	<div class="cssload-cube cssload-c1"></div>
+	<div class="cssload-cube cssload-c2"></div>
+	<div class="cssload-cube cssload-c4"></div>
+	<div class="cssload-cube cssload-c3"></div>
+  </div>
+  <div id="load_message" style="margin-top:20px;margin-bottom:20px;">Loading...</div>
+  </div>
+  <!-- ./ Ajax Loader -->
+</div>
+</div>
+</div>
+</div><!-- ./ Center -->
+
+</body>
+</html>

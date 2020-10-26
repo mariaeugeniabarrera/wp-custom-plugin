@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Grupo Deboss Informes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+  <link rel="stylesheet" src='https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css'>
+  <script type="text/javascript" src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+  <script type="text/javascript" src='https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js'></script>
+  <script src="js/jquery.twbsPagination.js"></script>
+  <link rel="stylesheet" href="css/loader.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500' rel='stylesheet' type='text/css'>
+<style>
+body {
+	background-image: url(images/04.jpg);
+	background-size: 100% auto;
+	font-family: 'Ubuntu', sans-serif;
+}
+input {
+	margin-top:10px;
+	width:70%;
+}
+label {
+	margin-top:10px;
+}
+.label-danger {
+	/*margin-top:40px;*/
+	font-weight: 100;
+    padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    font-size: 14px;
+}
+.visitas-heading {
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #fff;
+	font-size:16px;
+	border-radius: 4px 4px 0px 0px;
+	background: #000000; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #000000 , #53346D); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #000000 , #53346D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+#visitas {
+	border-color: #2a0845;
+}
+@media only screen and (max-width: 767px) {
+	.panel {
+		width: 95%;
+		margin-top:20px;
+	}
+}
+@media screen and (min-width: 767px) {
+	.panel {
+		width: 70%;
+		margin-top:20px;
+	}
+}
+</style>
+
+<script>
+$( document ).ready(function() {
+
+		/* GLOBAL VARIABLES */
+		var d = new Date();
+		var mes = d.getMonth();
+		var anio = d.getFullYear();
+		var vistas_content = document.getElementById('vistas_content');
+		
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i = 0; i <ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length,c.length);
+				}
+			}
+			return "";
+		}
+		
+		var user = getCookie('session');
+		console.log("Usuario: " + user);
+
+		if(!user){
+			window.location = 'index.html';
+		}
+		
+		logout = function() {
+			$.post( "controllers/data.php",
+			{
+				'data':'logout'
+			}, function( data ) {
+				window.location = 'index.html';
+			});	
+		}
+		
+		function getNotasVistas(){
+			console.log("Entro");
+			console.log(anio);
+			$.post( "controllers/data.php",
+			{
+				'data':'cantidad_vistas_notas_del_sitio',
+				'anio':anio
+			}, function( data ) {
+				console.log(JSON.stringify(data));
+				data = JSON.parse(data);
+				vistas_content.innerHTML = '';
+				for(var ip=0;ip<data.length;ip++)
+				{
+					vistas_content.innerHTML+='<tr>' +
+					'<td>' + data[ip].post_id + '</td>'+
+					'<td>' + data[ip].post_title + '</td>'+
+					'<td>' + data[ip].guid + '</td>'+
+					'<td>' + data[ip].cantidad_vistas + '</td>'+
+					'<td>' + data[ip].post_date + '</td>'+
+					'<td>' + data[ip].post_status + '</td>'+
+					'</tr>';
+				}
+				$('#loader').hide();
+				$('#vistas').DataTable({});
+			});
+		}
+		getNotasVistas();
+});
+</script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html"><img alt="Brand" src="images/logo_gd_29x30.png" height="100%"></a>
+    </div>
+    <ul class="nav navbar-nav">
+	  <li><a href="index.html">Ver Datos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+	  <li class="active"><a href="notas.html">Notas</a></li>
+      <li><a href="informes_enviados.html">Informes</a></li>
+      <li><a href="banner.html">Banners</a></li>
+	  <form class="navbar-form navbar-right" role="">
+		<button type="button" class="btn btn-default" onclick="logout()">Logout</button>
+	  </form>
+    </ul>
+  </div>
+</nav>
+
+
+<div align="center">
+<div id="visitas" class="panel panel-default" align="center">
+ <div class="visitas-heading">Cantidad de Visitas por Nota</div>
+  <div class="panel-body">
+  
+  <!-- Cantidad de Visitas Por Nota -->
+  <div class="table-responsive">
+	  <table id="vistas" class="table table-striped">
+		<thead>
+		  <tr>
+			<th>Id Nota</th>
+			<th>Titulo</th>
+			<th>Url</th>
+			<th>Cantidad de Visitas</th>
+			<th>Fecha</th>
+			<th>Estado</th>
+		  </tr>
+		</thead>
+		<tbody id="vistas_content">
+		</tbody>
+	  </table>
+  </div>
+  <!-- ./ Cantidad de Visitas Por Nota -->
+  <!-- Ajax Loader -->
+  <div id="loader">
+  <div class="cssload-thecube">
+	<div class="cssload-cube cssload-c1"></div>
+	<div class="cssload-cube cssload-c2"></div>
+	<div class="cssload-cube cssload-c4"></div>
+	<div class="cssload-cube cssload-c3"></div>
+  </div>
+  <div id="load_message" style="margin-top:20px;margin-bottom:20px;">Loading...</div>
+  </div>
+  <!-- ./ Ajax Loader -->
+  
+</div>
+</div>
+</div>
+</div><!-- ./ Center -->
+
+</body>
+</html>
